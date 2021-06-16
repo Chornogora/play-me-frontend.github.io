@@ -1,0 +1,100 @@
+.rehearsal-countdown-text {
+  position: relative;
+  font-size: 30vh;
+  color: white;
+  top: 22%;
+  height: 20%;
+  z-index: 5;
+}
+
+.rehearsal-countdown, .main-content-component {
+  position: absolute;
+  left: 25%;
+  width: 50%;
+  top: 12%;
+  height: 80%;
+  z-index: 4;
+}
+
+.rehearsal-countdown {
+  background-color: rgba(127, 127, 127, 0.85);
+  text-align: center;
+}
+
+.main-content-component {
+  background-color: #242526;
+}
+
+.btn-outline-danger {
+  color: #fff;
+  font-size: 26px;
+  background-color: #28a745;
+  background-image: none;
+  border-color: #28a745;
+  padding: 5px 10px 5px 10px;
+}
+
+.start-button {
+  position: absolute;
+  top: 80%;
+  left: 6.5%;
+  transition: color 0.3s ease-in-out;
+}
+
+.start-button:hover {
+  cursor: pointer;
+  color: aqua;
+}
+
+.metronome-area {
+  position: absolute;
+  top: 12%;
+  left: 80%;
+  width: 20%;
+  height: 80%;
+  background-color: #242526;
+  color: rgb(128, 128, 128);
+  box-shadow: -6px 0 12px 0 rgba(0, 0, 0, 0.75);
+  font-size: 18pt;
+  padding-left: 10px;
+}
+
+.metronome-button {
+  border-radius: 100%;
+  border: 3px solid white;
+  height: 100px;
+  width: 100px;
+  transition: border-color 0.25s ease-in-out;
+  margin-top: 10px;
+  position: absolute;
+  left: 35%;
+  top: 75%;
+}
+
+.metronome-button:hover {
+  border-color: aqua;
+  cursor: pointer;
+}
+
+.active-metronome-button {
+  background: url("/assets/img/metronome2.png") no-repeat;
+  background-size: 100%;
+}
+
+.disabled-metronome-button {
+  background: url("/assets/img/metronome-disabled.png") no-repeat;
+  background-size: 100%;
+}
+
+.metronome-tab {
+  transition: color 0.25s ease-in-out;
+}
+
+.metronome-tab:hover {
+  cursor: pointer;
+  color: aqua;
+}
+
+.metronome-current-tab {
+  color: red;
+}

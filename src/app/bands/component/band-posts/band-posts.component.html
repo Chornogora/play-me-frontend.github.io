@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="news-line rounded">
+    <div *ngFor="let post of posts" class="post">
+      <div class="post-title">
+        <i class="fas fa-users band-icon"></i>
+        <span>{{post.band.name}}</span>
+        <div class="post-date">
+          <span>{{dateService.formatDate(post.creationDatetime)}}</span>
+          <span *ngIf="musician && band && bandService.isAdministrator(musician, band)
+          && band.bandStatus.name === 'active'" class="post-delete-button"
+                (click)="showDeleteForm(post)">×</span>
+        </div>
+      </div>
+      <div class="card post-card">
+        <div *ngIf="post.photos.length" class="card-img-top">
+          <ngb-carousel class="carousel slide carousel-fade custom-carousel" interval="2000"
+                        pauseOnHover="true">
+            <ng-template ngbSlide *ngFor="let photo of post.photos">
+              <div class="wrapper">
+                <img class="d-block w-100" src="{{'http://localhost:8080/images/' + photo.photoUrl}}"
+                     alt="{{photo.photoUrl}}">
+                <div class="foreground"></div>
+              </div>
+            </ng-template>
+          </ngb-carousel>
+        </div>
+
+        <div class="card-description">
+          <div class="card-body post-description" *ngIf="post.text || post.files.length">
+            <p class="card-text" *ngIf="post.text">{{post.text}}</p>
+            <div *ngIf="post.files.length">
+              <div *ngFor="let file of post.files">
+                <i class="fas fa-compact-disc"></i>
+                <a href="{{'http://localhost:8080/file/' + file.fileUrl}}">
+                  {{file.fileUrl.substr( 41)}}
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="comment-link">
+            <div class="like">
+              <span class="like-amount">{{post.likedBy.length}}</span>
+              <i [class]="{'fas': true, 'fa-heart':true, 'like-button': true, 'liked':(isLiked(post))}"
+                 (click)="putOrUnputLike(post)"></i>
+            </div>
+            <span class="comment-link-text" (click)="openComments(post)">Comments</span>
+          </div>
+          <app-comments-list *ngIf="commentOpened[post.id]" [comments]="post.comments" [user]="musician.user"
+                             (commentCreationEvent)="createComment($event, post)"
+                             (commentDeletingEvent)="deleteComment($event, post)"></app-comments-list>
+        </div>
+      </div>
+    </div>
+    <section waIntersectionObserver waIntersectionThreshold="0.7">
+      <div class="end-of-news rounded" (waIntersectionObservee)="addNews()">End of news</div>
+    </section>
+  </div>
+</div>
+
+<app-modal *ngIf="postToDelete" [title]="'Post deleting confirmation'" [text]="'Are you sure want to delete this post?'"
+           (acceptEvent)="deletePost()"
+           (cancelEvent)="cancelDeleting()"></app-modal>

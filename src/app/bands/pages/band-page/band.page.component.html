@@ -1,0 +1,45 @@
+<app-header (signOutEvent)="signOut()" [user]="user"></app-header>
+<div *ngIf="band" class="band-page-content">
+  <img [src]="band.logo ? 'http://localhost:8080/images/' + band.logo : 'assets/img/camera.png'" class="band-image">
+  <div class="band-info">
+    <div *ngIf="musician && band && bandService.isLeader(musician, band) && band.bandStatus.name === 'active'"
+         class="band-edit">
+      <a href="band/{{id}}/edit"><i class="fas fa-cog"></i></a>
+    </div>
+    <div class="band-title">{{band.name}}</div>
+    <hr>
+    <div class="band-created">Created {{dateService.formatDateOnly(band.creationDate)}}</div>
+    <hr>
+    <div class="members-title">Members</div>
+    <div class="band-members">
+      <div *ngFor="let membership of members">
+        <span [ngSwitch]="membership.status.name">
+          <i *ngSwitchCase="'leader'" class="member-icon gold fas fa-crown"></i>
+          <i *ngSwitchCase="'administrator'" class="member-icon silver fas fa-crown"></i>
+          <i *ngSwitchCase="'player'" class="member-icon fas fa-user"></i>
+        </span>
+        <span>{{membership.musician.user.firstName}} {{membership.musician.user.lastName}} </span>
+        <span *ngIf="membership.musician.nickname">{{membership.musician.nickname}}</span>
+      </div>
+      <button *ngIf="musician && band.bandStatus.name === 'active' &&
+      bandService.isMemberOf(musician, band)" (click)="tryLeaveBand()"
+              class="btn btn-outline-danger leave-group-button">
+        Leave group
+      </button>
+    </div>
+  </div>
+  <div *ngIf="musician && band && this.bandService.isAdministrator(musician, band)
+  && band.bandStatus.name === 'active'">
+    <app-post-creator [band]="band"></app-post-creator>
+  </div>
+  <app-band-posts *ngIf="musician" [band]="band" [musician]="musician"></app-band-posts>
+</div>
+
+<app-modal *ngIf="shouldLeaveBand" [title]="'Leaving confirmation'" [text]="'Are you sure want to leave this band?'"
+           (acceptEvent)="leaveBand()"
+           (cancelEvent)="cancelLeaving()"></app-modal>
+
+<app-modal *ngIf="showMessage" [title]="'Can\'t leave band'"
+           [text]="'You can\'t leave this band, appoint another leader first'"
+           (acceptEvent)="cancelLeaving()"
+           (cancelEvent)="cancelLeaving()"></app-modal>

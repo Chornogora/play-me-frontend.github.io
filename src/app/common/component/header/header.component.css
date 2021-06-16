@@ -1,0 +1,42 @@
+.custom-navbar {
+  background-color: #242526;
+  box-shadow: 0 5px 25px 0 rgba(0,0,0,0.75);
+}
+
+.navbar-container {
+  display: inherit !important;
+}
+
+.navbar-element {
+  background-color: #3A3B3C;
+  color: white;
+  padding: 5px;
+  height: 50px;
+  vertical-align: middle;
+}
+
+.logo-image {
+  width: 30px;
+}
+
+.sign-out {
+  width: auto;
+  white-space: nowrap;
+}
+
+.user-name {
+  margin-right: 5px;
+  margin-top: auto;
+  display: inline-block;
+}
+
+.profile-name {
+  color: white;
+  transition: color .15s ease-in-out;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.profile-name:hover {
+  color: #17a2b8;
+}
